@@ -1,12 +1,10 @@
 module Wrappers
   module Jira
-    class History
-      attr_reader :builder, :adapter, :histories
+    class History < Base
+      attr_reader :histories
 
-      def initialize(builder)
-        @builder     = builder.all
-        @adapter     = adapter
-        @histories ||= all
+      def initialize(payload)
+        super
       end
 
       def fetch_time_of(status)
@@ -38,7 +36,11 @@ module Wrappers
         end
       end
 
-      def all
+      def histories
+        @histories ||= process!
+      end
+
+      def process!
         fetch.map do |a|
           Entities::Jira::History.new(a['created'], a['items'])
         end
@@ -49,11 +51,6 @@ module Wrappers
           .process
           .fetch('changelog')
           .fetch('histories')
-      end
-
-      def adapter
-        ::Jira::Adapter
-          .new(builder)
       end
     end
   end
