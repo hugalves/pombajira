@@ -4,14 +4,8 @@ defaults: &defaults
       username: user
       password: password
       site:     https://xxxx.atlassian.net:443
-    board:
-      - Product Backlog
-      - Sprint Backlog
-      - Doing
-      - Code Review
-      - Testing
-      - Waiting to Deploy
-      - Done
+
+    project_key: XXX
 
 development:
   <<: *defaults

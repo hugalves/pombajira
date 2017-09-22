@@ -10,6 +10,11 @@ module Wrappers
 
       private
 
+      def all
+        adapter
+          .process
+      end
+
       def adapter
         ::Jira::Adapter
           .new(payload)
