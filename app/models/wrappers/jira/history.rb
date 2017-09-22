@@ -16,32 +16,18 @@ module Wrappers
       private
 
       def time_of(status)
-        story   = fetch_by(status)
-        from_id = from_id(story)
-
-        time    = with_status_items.select do |history|
-          history.items.detect do |item|
-            item['to'] == from_id
-          end
-        end.first
-
-        time.created_at
+        story = fetch_by(status)
+        story.try(:created_at)
       end
 
       def fetch_by(status)
-        with_status_items.select do |history|
+        story = with_status_items.select do |history|
           history.items.detect do |item|
             item['toString'] == status
           end
         end
-      end
 
-      def from_id(story)
-        story
-          .first
-          .items
-          .detect { |h| h['field'] == 'status' }
-          .fetch('from')
+        Array(story).first
       end
 
       def with_status_items
