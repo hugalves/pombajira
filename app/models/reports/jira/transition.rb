@@ -3,6 +3,8 @@ require 'csv'
 module Reports
   module Jira
     class Transition
+      include ::Convertable
+
       attr_reader :issue, :project_id, :statuses
 
       def initialize(issue)
@@ -16,7 +18,7 @@ module Reports
         wrapper = Wrappers::Jira::History.new(payload)
 
         statuses.map do |status|
-          { "#{status}" => Converter.format(wrapper.fetch_time_of(status)) }
+          { "#{status}" => date_formatter(wrapper.fetch_time_of(status)) }
         end
       end
 
