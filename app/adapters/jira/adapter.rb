@@ -1,9 +1,9 @@
 module Jira
   class Adapter
-    attr_reader :builder
+    attr_reader :payload
 
-    def initialize(builder)
-      @builder = builder
+    def initialize(payload)
+      @payload = payload
     end
 
     def process
@@ -14,7 +14,7 @@ module Jira
     private
 
     def request_uri
-      "#{jira_uri}#{builder}"
+      "#{jira_uri}#{payload}"
     end
 
     def request(uri)

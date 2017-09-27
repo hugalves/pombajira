@@ -3,10 +3,6 @@ module Wrappers
     class History < Base
       attr_reader :histories
 
-      def initialize(payload)
-        super
-      end
-
       def fetch_time_of(status)
         time_of(status)
       end

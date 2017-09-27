@@ -1,5 +1,3 @@
-require 'csv'
-
 module Reports
   module Jira
     class Transition
