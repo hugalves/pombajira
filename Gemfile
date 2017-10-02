@@ -13,6 +13,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'httparty'
 gem 'settingslogic'
+gem 'redis'
 
 group :development, :test do
   gem 'byebug'

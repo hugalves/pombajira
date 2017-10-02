@@ -1,7 +1,7 @@
 module Reports
   module Jira
     class Transition
-      include ::Convertable
+      include ::Utilizable
 
       attr_reader :issue, :project_id, :statuses
 
@@ -12,8 +12,9 @@ module Reports
       end
 
       def process
-        payload = Builders::Jira::Issue.new(issue).all
-        wrapper = Wrappers::Jira::History.new(payload)
+        payload  = Builders::Jira::Issue.new(issue).all
+        wrapper  = Wrappers::Jira::History.new(payload)
+        statuses = fetch_statuses
 
         statuses.map do |status|
           { "#{status}" => date_formatter(wrapper.fetch_time_of(status)) }
@@ -22,7 +23,7 @@ module Reports
 
       private
 
-      def statuses
+      def fetch_statuses
         payload = Builders::Jira::Status.new(project_id).fetch
         wrapper = Wrappers::Jira::Status.new(payload)
 
@@ -31,9 +32,8 @@ module Reports
 
       def project_id
         payload = Builders::Jira::Project.all
-        wrapper = Wrappers::Jira::Project.new(payload)
-
-        wrapper.fetch_project_id
+        wrapper = Wrappers::Jira::Project.new(issue, payload)
+        wrapper.fetch_id!
       end
     end
   end

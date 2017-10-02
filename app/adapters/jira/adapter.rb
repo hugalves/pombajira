@@ -1,5 +1,7 @@
 module Jira
   class Adapter
+    include Settable
+
     attr_reader :payload
 
     def initialize(payload)
@@ -44,10 +46,6 @@ module Jira
 
     def connection_settings
       jira_settings[:connection]
-    end
-
-    def jira_settings
-      Settings.jira.deep_symbolize_keys
     end
 
     def basic_auth

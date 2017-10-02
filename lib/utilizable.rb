@@ -1,4 +1,4 @@
-module Convertable
+module Utilizable
   def date_formatter(datetime)
     return nil if datetime.nil?
     Date
