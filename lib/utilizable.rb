@@ -1,6 +1,6 @@
 module Utilizable
   def date_formatter(datetime)
-    return nil if datetime.nil?
+    return '' if datetime.nil?
     Date
       .parse(datetime)
       .strftime("%d/%m")
